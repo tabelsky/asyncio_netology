@@ -31,6 +31,8 @@ async def chunked_async(async_iter, size):
         try:
             item = await async_iter.__anext__()
         except StopAsyncIteration:
+            if buffer:
+                yield buffer
             break
         buffer.append(item)
         if len(buffer) == size:
